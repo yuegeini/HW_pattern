@@ -31,10 +31,12 @@ class ServiceTest {
         $("[data-test-id=city] input").setValue(validUser.getCity());
         $("[data-test-id=name] input").setValue(validUser.getName());
         $("[data-test-id=phone] input").setValue(validUser.getPhone());
-        $("[data-test-id=date] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        $("[data-test-id=date] input").setValue(firstMeetingDate);
         $("[data-test-id=agreement]").click();
 
+        $("[data-test-id=date] input").click();
+
+        $("[data-test-id=date] input").doubleClick().sendKeys(firstMeetingDate);//.setValue();
+        $("[data-test-id=date] input").pressEscape();
 
         $(byText("Запланировать")).click();
         $(byText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
@@ -43,8 +45,10 @@ class ServiceTest {
                 .shouldHave(exactText("Встреча успешно запланирована на " + firstMeetingDate))
                 .shouldBe(visible);
 
-        $("[data-test-id=date] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        $("[data-test-id=date] input").setValue(secondMeetingDate);
+        $("[data-test-id=date] input").click();
+
+        $("[data-test-id=date] input").doubleClick().sendKeys(secondMeetingDate);//.setValue();
+        $("[data-test-id=date] input").pressEscape();
         $(byText("Запланировать")).click();
 
         $("[data-test-id=replan-notification] .notification__content")
